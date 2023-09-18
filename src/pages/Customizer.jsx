@@ -9,14 +9,15 @@ import { downloadCanvasToImage, reader} from '../config/helpers'
 import { EditorTabs, FilterTabs, DecalTypes} from '../config/constants'
 import { fadeAnimation, slideAnimation } from '../config/motion'
 import {AIPicker, FilePicker, ColorPicker, Tab, CustomButton} from '../components/index'
-import { AlwaysCompare } from 'three'
+import { AlwaysCompare, ArrayCamera } from 'three'
 
 const Customizer = () => {
   const snap = useSnapshot(state);
   const [file, setFile] = useState('');
   const [prompt, setPrompt] = useState('');
-  const [generationgImg, setGeneratingImg] = useState('');
+  const [generationgImg, setGeneratingImg] = useState(false);
   const [activeEditorTab, setActiveEditorTab] = useState('');
+  
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShirt: false,
@@ -35,17 +36,30 @@ const Customizer = () => {
         return <AIPicker
                 prompt={prompt}
                 setPrompt={setPrompt}
-                generationgImg={generationgImg}
+                generatingImg={generationgImg}
                 handleSubmit={handleSubmit}/>
       default:
         return null;
     }
   }
 
-  const handleSubmit = async(type) => {
+  const handleSubmit = async (type) => {
     if(!prompt) return alert("Please enter a prompt.");
 
     try {
+      setGeneratingImg(true);
+      const response = await fetch('http://localhost:8080/api/vi/dalle',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+          prompt,
+        })
+      })
+      const data = await response.json();
+      handelDecal(type, `data:image/png;base64,${data.photo[0].b64_json}`);
     } catch (err){
       alert(err);
     } finally{
