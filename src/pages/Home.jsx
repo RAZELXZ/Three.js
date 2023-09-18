@@ -28,7 +28,7 @@ const Home = () => {
           <motion.div className='home-content' {...headContainerAnimation}>
             <motion.div {...headTextAnimation}>
               <h1 className='head-text'>
-                干， <br className="xl:block hidden" />  就完了
+                1, <br className="xl:block hidden" />  2 3.
               </h1>
             </motion.div>
             <motion.div {...headContentAnimation} className='flex flex-col gap-5'>

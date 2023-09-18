@@ -42,7 +42,7 @@ const Customizer = () => {
     }
   }
 
-  const handleSubmit = async(tyoe) => {
+  const handleSubmit = async(type) => {
     if(!prompt) return alert("Please enter a prompt.");
 
     try {
