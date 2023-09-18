@@ -10,7 +10,8 @@
     "dev": "concurrently \"npm run server\" \"vite\"",
     "install-server": "cd server && npm install",
     "build" : "vite build",
-    "heroku-postbuild": "npm run install-server && npm run build"
+    "heroku-postbuild": "npm run install-server && npm run build",
+    "start": "vite"
   },
   "dependencies": {
     "@react-three/drei": "^9.82.0",
